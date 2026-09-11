@@ -1,0 +1,36 @@
+# Bot framework (customer-facing shop / control panel)
+aiogram>=3.15,<4.0
+
+# Userbot + group-call recording
+# NOTE: installs as the `pyrogram` import namespace, but from the "kurigram"
+# package — the original PyPI "pyrogram" package is behind and is missing
+# error classes current py-tgcalls needs (confirmed while building this).
+kurigram>=2.2.24
+tgcrypto>=1.2.5
+py-tgcalls>=2.1.0
+
+# Database
+SQLAlchemy>=2.0.36
+aiosqlite>=0.20.0
+asyncpg>=0.30.0        # only needed if you switch DATABASE_URL to PostgreSQL
+
+# HTTP / webhooks
+aiohttp>=3.11.10
+python-dotenv>=1.0.1
+
+# Payments
+yookassa>=3.5.0
+
+# S3-compatible storage (optional — only used when S3_ENABLED=true)
+boto3>=1.35.0
+
+# Encrypts worker session strings at rest (database/crypto_util.py)
+cryptography>=43.0.0
+
+# Bundles a full static ffmpeg binary (confirmed: libx264, libopus, aac,
+# xstack, tpad, amix, apad all present) so no separate system ffmpeg
+# install is needed — see userbot/recorder.py.
+imageio-ffmpeg>=0.5.1
+
+# ffmpeg itself is a system binary, not a Python package — see Dockerfile /
+# README "Требования" for installing it.

@@ -1,0 +1,26 @@
+services:
+  bot:
+    build: .
+    command: ["python", "run_bot.py"]
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "${WEBHOOK_PORT:-8080}:8080"
+    volumes:
+      - ./storage:/app/storage
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/health', timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  userbot:
+    build: .
+    command: ["python", "run_userbot.py"]
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./storage:/app/storage
+    # No port exposed — this process only joins calls and writes to the
+    # shared database/storage volume, nothing connects to it directly.
